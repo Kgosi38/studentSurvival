@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Survival</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6c5ce7">
+<link rel="apple-touch-icon" href="android-chrome-192x192.png">
+</head>
+<body>
+  <header class="nav">
+    <h1 class="logo">🎓 Student Survival</h1>
+    <button id="themeBtn" aria-label="Toggle theme">🌙</button>
+  </header>
+
+  <section class="hero">
+    <h2>Survive campus. <span>Thrive</span> anyway.</h2>
+    <p>Budget, deadlines and study tools in one place.</p>
+    <a href="#tools" class="cta">Get started</a>
+  </section>
+
+  <main id="tools" class="grid">
+  <a href="#budget" class="card"><span>💰</span><h3>Budget Tracker</h3><p>Know where your money goes.</p></a>
+  <a href="#deadlines" class="card"><span>📅</span><h3>Deadline Tracker</h3><p>Never miss a due date.</p></a>
+  <a href="#planner" class="card"><span>📚</span><h3>Study Planner</h3><p>Plan sessions that stick.</p></a>
+</main>
+
+<section class="budget" id="budget">
+  <h2>💰 Budget Tracker</h2>
+  <div class="balance">
+    <p>Balance</p>
+    <h3 id="balance">R0.00</h3>
+  </div>
+
+  <div class="insights">
+  <div class="insight"><p>Daily average</p><h4 id="avg">R0</h4></div>
+  <div class="insight"><p>Days until broke</p><h4 id="runway">—</h4></div>
+</div>
+<div id="chart"></div>
+
+  <div class="form">
+    <input id="desc" placeholder="What for? (e.g. Taxi)">
+    <input id="amount" type="number" placeholder="Amount (R)">
+    <select id="type">
+      <option value="expense">Expense</option>
+      <option value="income">Income</option>
+    </select>
+
+<select id="category">
+  <option>Food</option>
+  <option>Transport</option>
+  <option>Data & Airtime</option>
+  <option>Rent</option>
+  <option>Study</option>
+  <option>Fun</option>
+  <option>Other</option>
+</select>
+
+    <button id="addBtn">Add</button>
+  </div>
+
+  <ul id="list"></ul>
+</section>
+
+<section class="deadlines" id="deadlines">
+  <h2>📅 Deadline Tracker</h2>
+
+  <div class="form">
+    <input id="dTitle" placeholder="e.g. Java assignment">
+    <input id="dDate" type="date">
+    <button id="addDeadline">Add deadline</button>
+  </div>
+
+  <ul id="dlist"></ul>
+</section>
+
+<section class="planner" id="planner">
+  <h2>📚 Study Planner</h2>
+
+  <div class="progress-box">
+    <div class="bar-label"><span>This week</span><span id="pText">0 / 0 done</span></div>
+    <div class="bar-track"><div class="bar-fill" id="pFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="form">
+    <input id="sSubject" placeholder="Subject (e.g. Java)">
+    <select id="sDay">
+      <option>Mon</option><option>Tue</option><option>Wed</option>
+      <option>Thu</option><option>Fri</option><option>Sat</option><option>Sun</option>
+    </select>
+    <input id="sMins" type="number" placeholder="Minutes (e.g. 45)">
+    <button id="addSession">Add session</button>
+  </div>
+
+  <ul id="slist"></ul>
+  <button id="resetWeek" class="ghost">Start a new week</button>
+
+  <div class="timer">
+    <h3>⏱️ Focus timer</h3>
+    <div class="presets">
+  <button class="ghost" data-min="15">15</button>
+  <button class="ghost" data-min="25">25</button>
+  <button class="ghost" data-min="45">45</button>
+  <button class="ghost" data-min="60">60</button>
+  <input id="customMin" type="number" min="1" max="180" placeholder="Custom min">
+  <button class="ghost" id="setCustom">Set</button>
+</div>
+    <div id="timeDisplay">25:00</div>
+    <div class="timer-btns">
+      <button id="startTimer">Start</button>
+      <button id="resetTimer" class="ghost">Reset</button>
+    </div>
+  </div>
+</section>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
