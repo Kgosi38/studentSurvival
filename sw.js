@@ -1,9 +1,10 @@
-const CACHE = "student-survival-v3";
+const CACHE = "student-survival-v13";
 const FILES = ["./", "./index.html", "./style.css", "./app.js", "./manifest.json"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
-  self.skipWaiting();
+  self.skipWaitin
+  ();
 });
 
 self.addEventListener("activate", e => {

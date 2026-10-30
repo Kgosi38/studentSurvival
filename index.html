@@ -6,26 +6,50 @@
   <title>Student Survival</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#6c5ce7">
-<link rel="apple-touch-icon" href="android-chrome-192x192.png">
+<meta name="theme-color" content="#1e3a8a">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
-<body>
+<body class="locked">
   <header class="nav">
     <h1 class="logo">🎓 Student Survival</h1>
     <button id="themeBtn" aria-label="Toggle theme">🌙</button>
   </header>
 
   <section class="hero">
-    <h2>Survive campus. <span>Thrive</span> anyway.</h2>
-    <p>Budget, deadlines and study tools in one place.</p>
-    <a href="#tools" class="cta">Get started</a>
-  </section>
+  <h2>Survive campus. <span>Thrive</span> anyway.</h2>
+  <p>Budget, deadlines and study tools in one place.</p>
+  <a href="#tools" class="cta">Get started</a>
+</section>
 
   <main id="tools" class="grid">
-  <a href="#budget" class="card"><span>💰</span><h3>Budget Tracker</h3><p>Know where your money goes.</p></a>
-  <a href="#deadlines" class="card"><span>📅</span><h3>Deadline Tracker</h3><p>Never miss a due date.</p></a>
-  <a href="#planner" class="card"><span>📚</span><h3>Study Planner</h3><p>Plan sessions that stick.</p></a>
+  <a href="#budget" class="card"><h3>Budget Tracker</h3><p>Know where your money goes.</p></a>
+  <a href="#deadlines" class="card"><h3>Deadline Tracker</h3><p>Never miss a due date.</p></a>
+  <a href="#planner" class="card"><h3>Study Planner</h3><p>Plan sessions that stick.</p></a>
 </main>
+
+<section class="account" id="account">
+  <div id="authOut">
+  <div class="auth-tabs">
+    <button id="tabLogin" class="tab active">Log in</button>
+    <button id="tabSignup" class="tab">Create account</button>
+  </div>
+  <p id="authIntro" class="hint">Welcome back! Log in to load your data.</p>
+  <div class="form">
+    <input id="authName" placeholder="Your first name" hidden>
+    <input id="authEmail" type="email" placeholder="Email" autocomplete="email">
+    <input id="authPass" type="password" placeholder="Password" autocomplete="current-password">
+    <input id="authPass2" type="password" placeholder="Confirm password" autocomplete="new-password" hidden>
+    <button id="authSubmit">Log in</button>
+  </div>
+  <div id="authIn" hidden>
+    <p>Signed in as <strong id="authUser"></strong></p>
+    <p id="syncStatus" class="hint"></p>
+    <button id="signOutBtn" class="ghost">Log out</button>
+  </div>
+  <p id="authMsg" class="hint"></p>
+</section>
 
 <section class="budget" id="budget">
   <h2>💰 Budget Tracker</h2>
@@ -33,6 +57,27 @@
     <p>Balance</p>
     <h3 id="balance">R0.00</h3>
   </div>
+
+  <div class="payday">
+  <h3>Will my money last?</h3>
+  <label for="payday">Next payday (allowance / bursary)</label>
+  <input id="payday" type="date">
+
+  <div class="safe-box">
+    <p>Safe to spend per day</p>
+    <h3 id="safe">—</h3>
+    <small id="safeNote">Set your next payday to see this.</small>
+  </div>
+
+  <h4>Fixed costs before payday</h4>
+  <div class="form">
+    <input id="fName" placeholder="e.g. Rent, Transport pass">
+    <input id="fAmount" type="number" placeholder="Amount (R)">
+    <input id="fDate" type="date">
+    <button id="addFixed">Add fixed cost</button>
+  </div>
+  <ul id="flist"></ul>
+</div>
 
   <div class="insights">
   <div class="insight"><p>Daily average</p><h4 id="avg">R0</h4></div>
@@ -66,18 +111,25 @@
 
 <section class="deadlines" id="deadlines">
   <h2>📅 Deadline Tracker</h2>
-
+  <p class="hint">Add the weight (% of your final mark). Priority = weight ÷ days left.</p>
   <div class="form">
-    <input id="dTitle" placeholder="e.g. Java assignment">
+    <input id="dTitle" placeholder="e.g. Java test 1">
+    <input id="dSubject" list="subjectList" placeholder="Subject / module (e.g. Java)">
+    <input id="dWeight" type="number" min="0" max="100" placeholder="Weight % (e.g. 40)">
     <input id="dDate" type="date">
     <button id="addDeadline">Add deadline</button>
   </div>
-
+  <datalist id="subjectList"></datalist>
   <ul id="dlist"></ul>
 </section>
 
 <section class="planner" id="planner">
   <h2>📚 Study Planner</h2>
+
+  <div class="goal-row">
+    <label for="weeklyGoal">Weekly study goal (hours)</label>
+    <input id="weeklyGoal" type="number" min="1" max="100" value="10">
+  </div>
 
   <div class="progress-box">
     <div class="bar-label"><span>This week</span><span id="pText">0 / 0 done</span></div>
@@ -85,7 +137,8 @@
   </div>
 
   <div class="form">
-    <input id="sSubject" placeholder="Subject (e.g. Java)">
+    <input id="sSubject" list="subjectList" placeholder="Subject (e.g. Java)">
+    <select id="sDeadline"></select>
     <select id="sDay">
       <option>Mon</option><option>Tue</option><option>Wed</option>
       <option>Thu</option><option>Fri</option><option>Sat</option><option>Sun</option>
@@ -97,16 +150,20 @@
   <ul id="slist"></ul>
   <button id="resetWeek" class="ghost">Start a new week</button>
 
+  <div id="subjectSummary"></div>
+  <div id="weekHistory"></div>
+
   <div class="timer">
     <h3>⏱️ Focus timer</h3>
+    <select id="timerSession"></select>
     <div class="presets">
-  <button class="ghost" data-min="15">15</button>
-  <button class="ghost" data-min="25">25</button>
-  <button class="ghost" data-min="45">45</button>
-  <button class="ghost" data-min="60">60</button>
-  <input id="customMin" type="number" min="1" max="180" placeholder="Custom min">
-  <button class="ghost" id="setCustom">Set</button>
-</div>
+      <button class="ghost" data-min="15">15</button>
+      <button class="ghost" data-min="25">25</button>
+      <button class="ghost" data-min="45">45</button>
+      <button class="ghost" data-min="60">60</button>
+      <input id="customMin" type="number" min="1" max="180" placeholder="Custom min">
+      <button class="ghost" id="setCustom">Set</button>
+    </div>
     <div id="timeDisplay">25:00</div>
     <div class="timer-btns">
       <button id="startTimer">Start</button>
@@ -115,7 +172,11 @@
   </div>
 </section>
 
-  <script src="app.js"></script>
+<script src="gsap.min.js"></script>
+<script src="fx.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="app.js"></script>
+<script src="sync.js"></script>
 
 </body>
 </html>
